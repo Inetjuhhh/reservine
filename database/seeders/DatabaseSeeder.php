@@ -43,7 +43,7 @@ class DatabaseSeeder extends Seeder
         }, range(1, 10)));
 
         // Categories
-        $categories = ['Starter', 'Main', 'Dessert', 'Drinks'];
+        $categories = ['Borrel', 'Lunch', 'Diner'];
         foreach ($categories as $name) {
             DB::table('categories')->insert([
                 'name' => $name,
@@ -53,11 +53,11 @@ class DatabaseSeeder extends Seeder
         }
 
         // Subcategories
-        $subcategories = ['Salad', 'Soup', 'Pasta', 'Fish', 'Meat', 'Vegan', 'Cake', 'Ice Cream', 'Wine', 'Cocktail'];
+        $subcategories = ['Voorgerechten koud', 'Voorgerechten warm', 'Hoofdgerechten vis', 'Hoofdgerechten vlees', 'Hoofdgerechten Vega', 'Nagerecht', 'Borrelhapjes hartig', 'Borrelhapjes zoet', 'Drinken alcoholisch', 'Drinken non-alcoholisch'];
         foreach ($subcategories as $i => $name) {
             DB::table('subcategories')->insert([
                 'name' => $name,
-                'category_id' => ($i % 4) + 1,
+                'category_id' => ($i % 3) + 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -68,6 +68,9 @@ class DatabaseSeeder extends Seeder
         foreach ($mealNames as $i => $name) {
             DB::table('meals')->insert([
                 'name' => $name,
+                'description' => "Delicious $name",
+                'image' => "storage/img/meal$i.jpg",
+                'price' => number_format(mt_rand(50, 450) / 10, 2),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -77,7 +80,7 @@ class DatabaseSeeder extends Seeder
         foreach (range(1, 10) as $i) {
             DB::table('meal_category')->insert([
                 'meal_id' => $i,
-                'category_id' => ($i % 4) + 1,
+                'category_id' => ($i % 3) + 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -118,8 +121,8 @@ class DatabaseSeeder extends Seeder
                 'table_id' => rand(1, 10),
                 'guest_id' => rand(1, 10),
                 'number_of_guests' => rand(1, 6),
-                'date' => Carbon::now()->addDays($i)->toDateString(),
-                'time' => Carbon::now()->addHours($i)->format('H:i:s'),
+                'starts_at' => Carbon::now()->addDays($i)->addHours(rand(0, 23))->toDateTimeString(),
+                'ends_at' => Carbon::now()->addDays($i)->addHours(2)->toDateTimeString(),
                 'allergies' => rand(0, 1) ? 'Nuts, Gluten' : null,
                 'arrived' => (bool)rand(0, 1),
                 'created_at' => now(),
@@ -144,6 +147,27 @@ class DatabaseSeeder extends Seeder
                 'ingredient_id' => rand(1, 10),
                 'action' => ['add', 'remove', 'replace'][rand(0, 2)],
                 'replacement_ingredient' => rand(0, 1) ? 'Tomato' : null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+        //add tenant to tenants table
+        DB::table('tenants')->insert([
+            'name' => 'Italine',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // Settings
+        $settings = [
+            ['tenant_id' => 1, 'name' => 'number_of_tables', 'value' => '10']
+        ];
+        foreach ($settings as $setting) {
+            DB::table('settings')->insert([
+                'tenant_id' => $setting['tenant_id'],
+                'name' => $setting['name'],
+                'value' => $setting['value'],
+                'type' => 'number',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

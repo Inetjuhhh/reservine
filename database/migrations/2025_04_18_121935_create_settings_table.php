@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('guests', function (Blueprint $table) {
+        Schema::create('settings', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tenant_id')->nullable()->constrained();
             $table->string('name');
-            $table->string('telephone');
-            $table->string('email')->nullable();
+            $table->text('value');
+            $table->enum('type', ['number', 'checkbox', 'text', 'textarea', 'email', 'password', 'file', 'image', 'select', 'radio', 'color', 'date', 'time', 'datetime', 'datetime-local', 'month', 'week', 'url']);
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('guests');
+        Schema::dropIfExists('settings');
     }
 };

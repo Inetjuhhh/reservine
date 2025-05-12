@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('table_id')->constrained('tables');
+            $table->foreignId('table_id')->nullable()->constrained('tables');
             $table->foreignId('guest_id')->constrained('guests');
             $table->integer('number_of_guests');
-            $table->date('date');
-            $table->time('time');
+            $table->dateTime('starts_at');
+            $table->dateTime('ends_at');
             $table->text('allergies')->nullable();
             $table->boolean('arrived')->default(false);
             $table->enum('status', ['open', 'tobe', 'done', 'archived'])->default('tobe');
