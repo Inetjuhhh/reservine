@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>Reservine</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -20,10 +20,13 @@
         @endif
     </head>
     <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
-        <header class="w-full lg:max-w-4xl max-w-[335px] text-sm flex flex-col items-center justify-center">
+        <header class="w-full lg:max-w-4xl max-w-[335px] text-lg flex flex-col items-center justify-center">
             @if (Route::has('login'))
                 <nav class="flex flex-col items-center justify-end gap-4 ">
-                    <p class="text-center text-sm lg:text-base text-[#1b1b18] dark:text-[#EDEDEC] mb-6">
+                    <div class="flex flex-col items-center justify-center gap-2">
+                        <img src="{{ asset('storage/img/logo.png') }}" alt="Reservine Logo" style="width: 100px">
+                    </div>
+                    <p class="text-center text-lg lg:text-base text-[#1b1b18] dark:text-[#EDEDEC] mb-6">
                         {{ __('Welcome to Reservine!') }}
                     </p>
                         @auth
