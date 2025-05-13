@@ -8,6 +8,6 @@
             </div>
         </div>
 
-       {{-- <x-reservation-filter :filter-date="$filterDate" view="tables-of-today" /> --}}
+       {{-- <x-reservation-filter :filter-date="$filterDate" :view="tables-of-today" /> --}}
 
 </x-app-layout>

@@ -3,6 +3,7 @@
     <input type="date" id="date" name="date" value="{{ $filterDate }}" class="text-black p-1 rounded">
     <input type="hidden" name="view" value="{{ $view }}">
     <button type="submit" class="px-3 py-1 bg-blue-500 text-white rounded">Filter</button>
-    <a href="{{ route($view === 'dashboard' ? 'reservation.index' : 'tables.of.today') }}"
+    <a href="{{ route($view === 'dashboard' ? 'reservation.index' : 'tables') }}"
        class="px-3 py-1 bg-gray-500 text-white rounded">Clear</a>
 </form>
+

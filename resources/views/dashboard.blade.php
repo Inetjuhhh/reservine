@@ -1,7 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
-        {{-- <x-reservation-filter :filter-date="$filterDate" view="dashboard" /> --}}
+        {{-- <x-reservation-filter :filter-date="$filterDate" :view="dashboard" /> --}}
 
+        <form method="GET" action="{{ route('reservations') }}" class="mb-4">
+            <label for="date" class="text-white font-semibold mr-2">Filter by Date:</label>
+            <input type="date" id="date" name="date" value="{{ $filterDate }}" class="text-black p-1 rounded">
+            <button type="submit" class="ml-2 px-3 py-1 bg-blue-500 text-white rounded">Filter</button>
+        </form>
 
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
