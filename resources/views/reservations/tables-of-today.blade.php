@@ -2,9 +2,9 @@
     <x-slot name="header">
     </x-slot>
 
-    <h2 class="text-3xl mb-5 text-white">Tafels vandaag</h2>
 
     <div class="wrapper w-4/5 mx-auto mt-10">
+        <h2 class="text-3xl mb-5 text-white">Tafels vandaag</h2>
         <div class="grid grid-cols-3 gap-4 justify-items-center">
             @foreach($tables as $table)
                     <div class="border border-green-500 rounded-lg hover:bg-green-200">

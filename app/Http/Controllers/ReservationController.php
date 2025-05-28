@@ -63,8 +63,16 @@ class ReservationController extends Controller
 
         $reservation = Reservation::where('table_id', $tableId)
             ->whereDate('starts_at', $today)
-            //where status is 'active'
-            ->get();
+            ->where('status', 'open')
+            ->first();
+        if (!$reservation) {
+            $reservation = new Reservation();
+            $reservation->table_id = $tableId;
+            $reservation->starts_at = Carbon::now();
+            $reservation->ends_at = Carbon::now()->addHours(2); 
+            $reservation->status = 'open';
+            $reservation->save();
+            }
         return view('reservations.show', compact('table', 'reservation'));
     }
 

@@ -22,6 +22,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
+        DB::table('guests')->insert([
+            'name' => 'Gast zonder reservering',
+            'telephone' => '06-12345678',
+            'email' => ''
+        ]);
         DB::table('guests')->insert(array_map(function ($i) {
             return [
                 'name' => "Guest $i",
