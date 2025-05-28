@@ -1,6 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        {{-- <x-reservation-filter :filter-date="$filterDate" :view="dashboard" /> --}}
+        {{-- <x-reservation-filter3 filter-date="$filterDate" :view="dashboard" /> --}}
+
+        <h2 class="text-3xl mb-5 text-white">Reserveringen</h2>
 
         <form method="GET" action="{{ route('reservations') }}" class="mb-4">
             <label for="date" class="text-white font-semibold mr-2">Filter by Date:</label>
@@ -21,9 +23,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if($reservations->isEmpty())
-                        <li>No reservations found.</li>
-                    @endif
+
                     @foreach($reservations as $reservation)
                         <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200">
                             <td class="text-white px-6 py-4">{{ $reservation->guest->name }}</td>
@@ -36,6 +36,9 @@
                             </td>
                         </tr>
                     @endforeach
+                    @if($reservations->isEmpty())
+                        <li>No reservations found.</li>
+                    @endif
                 </tbody>
             </table>
         </div>

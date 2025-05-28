@@ -43,6 +43,31 @@ class ReservationController extends Controller
     return view('dashboard', compact('reservations', 'availableTablesByReservation', 'filterDate'));
 }
 
+    public function tablesOfToday()
+    {
+        $today = now()->toDateString();
+        $tables = Table::all();
+        $reservations = Reservation::whereDate('starts_at', $today)
+            ->get();
+
+        return view('reservations/tables-of-today')->with([
+            'tables' => $tables,
+            'today' => $today,
+        ]);
+    }
+
+    public function show($tableId)
+    {
+        $table = Table::findOrFail($tableId);
+        $today = Carbon::today()->toDateString();
+
+        $reservation = Reservation::where('table_id', $tableId)
+            ->whereDate('starts_at', $today)
+            //where status is 'active'
+            ->get();
+        return view('reservations.show', compact('table', 'reservation'));
+    }
+
 
     // private function getFilteredReservations(?string $filterDate = null)
     // {

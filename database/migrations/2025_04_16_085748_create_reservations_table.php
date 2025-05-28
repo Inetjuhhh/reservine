@@ -20,7 +20,7 @@ return new class extends Migration
             $table->dateTime('ends_at');
             $table->text('allergies')->nullable();
             $table->boolean('arrived')->default(false);
-            $table->enum('status', ['open', 'tobe', 'done', 'archived'])->default('tobe');
+            $table->enum('status', ['to arrive', 'open', 'payed', 'archived'])->default('to arrive');
             $table->timestamps();
         });
     }

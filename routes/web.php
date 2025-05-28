@@ -18,6 +18,10 @@ Route::get('/tables', [ReservationController::class, 'tablesOfToday'])
     ->middleware(['auth', 'verified'])
     ->name('tables');
 
+Route::get('/reservations/{table}', [ReservationController::class, 'show'])
+    ->middleware(['auth', 'verified'])
+    ->name('reservations.show');
+
 Route::get('/reservations', [ReservationController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('reservations');

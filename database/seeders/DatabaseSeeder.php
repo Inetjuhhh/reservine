@@ -117,14 +117,19 @@ class DatabaseSeeder extends Seeder
 
         // Reservations
         foreach (range(1, 10) as $i) {
+
+            $startsAtRandom = now()->addDays(rand(0, 2))->addMinutes(rand(0, 59))->addSeconds(rand(0, 59))->toDateTimeString();
+            $startsAt = Carbon::parse($startsAtRandom)->floorMinute(15)->toDateTimeString();
+            $endsAt = Carbon::parse($startsAt)->addHours(rand(1, 3))->toDateTimeString();
             DB::table('reservations')->insert([
                 'table_id' => rand(1, 10),
                 'guest_id' => rand(1, 10),
                 'number_of_guests' => rand(1, 6),
-                'starts_at' => Carbon::now()->addDays($i)->addHours(rand(0, 23))->toDateTimeString(),
-                'ends_at' => Carbon::now()->addDays($i)->addHours(2)->toDateTimeString(),
+                'starts_at' => $startsAt,
+                'ends_at' => $endsAt,
                 'allergies' => rand(0, 1) ? 'Nuts, Gluten' : null,
                 'arrived' => (bool)rand(0, 1),
+                'status' => ['to arrive', 'open', 'payed', 'archived'][rand(0, 3)],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
