@@ -4,12 +4,12 @@
 
     <div class="wrapper w-4/5 mx-auto mt-10">
         <div class="">
-            <h2 class="text-white text-3xl">Tafel {{ $table->number }}</h2>
-            <p class="text-white italic">
+            <h2 class="text-gray-500 text-3xl">Tafel {{ $table->number }}</h2>
+            <p class="text-gray-500 italic">
                 Tafel opgestart om {{ \Carbon\Carbon::parse($reservation->starts_at)->format('d-m-y H:i') }}
             </p>
             <div class="mt-5">
-                <label for="status" class="text-white">Status:</label>
+                <label for="status" class="text-gray-500">Status:</label>
                 @livewire('change-status-of-reservation', ['reservationId' => $reservation->id, 'status' => $reservation->status], key($reservation->id))
             </div>
         </div>

@@ -25,13 +25,13 @@
                 <tbody>
 
                     @foreach($reservations as $reservation)
-                        <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200">
-                            <td class="text-white px-6 py-4">{{ $reservation->guest->name }}</td>
-                            <td class="text-white px-6 py-4">{{ \Carbon\Carbon::parse($reservation->starts_at)->format('d-m-Y') }}</td>
-                            <td class="text-white px-6 py-4">{{ \Carbon\Carbon::parse($reservation->starts_at)->roundMinute(15)->format('H:i') }}</td>
-                            <td class="text-white px-6 py-4">{{ \Carbon\Carbon::parse($reservation->ends_at)->ceilMinute(15)->format('H:i') }}</td>
-                            <td class="text-white px-6 py-4">{{ $reservation->status }}</td>
-                            <td class="text-white px-6 py-4">
+                        <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200 text-gray-500">
+                            <td class="text-gray-700 px-6 py-4">{{ $reservation->guest->name }}</td>
+                            <td class="text-gray-700 px-6 py-4">{{ \Carbon\Carbon::parse($reservation->starts_at)->format('d-m-Y') }}</td>
+                            <td class="text-gray-700 px-6 py-4">{{ \Carbon\Carbon::parse($reservation->starts_at)->roundMinute(15)->format('H:i') }}</td>
+                            <td class="text-gray-700 px-6 py-4">{{ \Carbon\Carbon::parse($reservation->ends_at)->ceilMinute(15)->format('H:i') }}</td>
+                            <td class="text-gray-700 px-6 py-4">{{ $reservation->status }}</td>
+                            <td class="text-gray-700 px-6 py-4">
                                 @livewire('reservation-table-selector', ['reservationId' => $reservation->id], key($reservation->id))
                             </td>
                         </tr>
