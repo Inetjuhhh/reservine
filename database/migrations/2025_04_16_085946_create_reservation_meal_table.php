@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('reservation_id')->constrained('reservations');
             $table->foreignId('meal_id')->constrained('meals');
+            $table->enum('status', ['besteld', 'geannuleerd', 'in behandeling', 'klaar', 'geserveerd'])->default('in behandeling');
             $table->timestamps();
         });
     }
