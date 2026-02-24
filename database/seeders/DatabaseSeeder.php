@@ -145,6 +145,7 @@ class DatabaseSeeder extends Seeder
             DB::table('reservation_meal')->insert([
                 'reservation_id' => $i,
                 'meal_id' => rand(1, 10),
+                'status' => ['besteld', 'geannuleerd', 'in behandeling', 'klaar', 'geserveerd'][rand(0, 4)],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

@@ -28,7 +28,7 @@ class ChangeStatusOfReservation extends Component
             $reservation->save();
             session()->flash('message', 'Reservation status updated successfully.');
         } else {
-            session()->flash('error', 'Reservation not found.');
+            session()->flash('message', 'Reservation not found.');
         }
     }
 
