@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Reservation;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class ChangeStatusOfReservation extends Component
 {
@@ -17,19 +18,25 @@ class ChangeStatusOfReservation extends Component
         $this->status = $status;
     }
 
-    public function save(){
-        $this->validate([
-            'status' => 'required|in:to arrive,open,payed,archived,cancelled',
+    public function save()
+     {
+
+        // $this->validate([
+        //     'status' => ['required', Rule::in(['to arrive','open','payed','archived','cancelled'])],
+        // ]);
+
+        $reservation = Reservation::findOrFail($this->reservationId);
+
+
+        $reservation->update([
+            'status' => $this->status,
         ]);
 
-        $reservation = Reservation::find($this->reservationId);
-        if ($reservation) {
-            $reservation->status = $this->status;
-            $reservation->save();
-            session()->flash('message', 'Reservation status updated successfully.');
-        } else {
-            session()->flash('message', 'Reservation not found.');
-        }
+
+        $reservation->refresh();
+
+
+        $this->dispatch('refresh-page');
     }
 
     public function render()

@@ -8,7 +8,7 @@
         <div class="grid grid-cols-3 gap-4 justify-items-center">
             @foreach($tables as $table)
                     <div class="border border-green-500 rounded-lg hover:bg-green-200">
-                         <a class=" " href="{{ route('reservations.show', $table->id)}}">
+                         <a class=" " href="{{ route('reservations.show', $table->reservations->first()->id)}}">
                             <div class="w-[200px] h-[200px] bg-table bg-cover
                                 @if($table->reservations->isEmpty())
                                     bg-green-500

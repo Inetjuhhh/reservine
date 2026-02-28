@@ -1,4 +1,4 @@
-<form wire:submit="save" class="m-10">
+<form wire:submit.prevent="save" class="m-10">
     @csrf
     <select wire:model="status" class="bg-gray-200 text-black p-2 rounded">
         <option value="to arrive">Nog niet aangekomen</option>

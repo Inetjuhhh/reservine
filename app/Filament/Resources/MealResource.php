@@ -12,6 +12,8 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class MealResource extends Resource
@@ -36,12 +38,16 @@ class MealResource extends Resource
                     ->required()
                     ->numeric()
                     ->minValue(0)
+                    ->prefix('€')
                     ->maxValue(10000),
-                Forms\Components\TextInput::make('image')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Select::make('subcategory_id')
-                    ->relationship('subcategory', 'name')
+                SpatieMediaLibraryFileUpload::make('image')
+                    ->label('Image')
+                    ->collection('meals')
+                    ->image(),
+                Forms\Components\Select::make('subcategories')
+                    ->relationship('subcategories', 'name')
+                    ->preload()
+                    ->multiple()
                     ->required(),
                 Forms\Components\Select::make('categories')
                     ->multiple()
@@ -58,8 +64,9 @@ class MealResource extends Resource
                 Tables\Columns\TextColumn::make('id')
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\ImageColumn::make('image')
+                SpatieMediaLibraryImageColumn::make('image')
                     ->label('Image')
+                    ->collection('meals')
                     ->circular()
                     ->size(50)
                     ->default('https://via.placeholder.com/150'),

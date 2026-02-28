@@ -26,6 +26,11 @@ Route::get('/reservations', [ReservationController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('reservations');
 
+Route::get('/reservations/{reservation}/print',
+    [ReservationController::class, 'print']
+)->name('reservations.print');
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

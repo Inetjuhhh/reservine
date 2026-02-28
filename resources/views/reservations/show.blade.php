@@ -26,6 +26,14 @@
                 <label for="status" class="text-gray-500">Status:</label>
                 @livewire('change-status-of-reservation', ['reservationId' => $reservation->id, 'status' => $reservation->status], key($reservation->id))
             </div>
+            <div class="mt-4">
+                @if($reservation->status === 'payed')
+                    <a href="{{ route('reservations.print', $reservation->id) }}"
+                    class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                        Print rekening
+                    </a>
+                @endif
+            </div>
 
             <div class="mt-5 grid grid-cols-2 gap-4">
                 <div class="bg-gray-800 p-4 rounded-lg">
@@ -38,6 +46,7 @@
                                 <tr>
                                     <th class="text-left">Naam gerecht</th>
                                     <th class="text-left">Status</th>
+                                    <th class="text-left">Prijs</th>
                                 </tr>
                             @foreach($reservation->meals as $meal)
                                 <tr class="rounded text-white
@@ -50,10 +59,16 @@
                                     @endif">
                                     <td class="p-2">{{ $meal->name }}</td>
                                     <td class="p-2">{{ $meal->status }}</td>
+                                    <td class="p-2">€{{ number_format($meal->price, 2) }}</td>
                                 </tr>
                             @endforeach
                         </table>
                     @endif
+                    <!-- i want a total of all the $meal->price together -->
+                    @php
+                        $total = $reservation->meals->sum('price');
+                    @endphp
+                    <p class="text-white mt-4">Totaal: €{{ number_format($total, 2) }}</p>
                 </div>
                 <div class="bg-gray-800 p-4 rounded-lg">
                     <h3 class="text-white text-2xl pb-5">Maaltijden:</h3>

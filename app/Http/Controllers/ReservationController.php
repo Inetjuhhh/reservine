@@ -58,27 +58,35 @@ class ReservationController extends Controller
         ]);
     }
 
-    public function show($tableId)
+    public function show($reservationId)
     {
-        $table = Table::findOrFail($tableId);
-        $today = Carbon::today()->toDateString();
-        $meals = Meal::all();
+        $today = Carbon::today();
+        $tableId = Reservation::findOrFail($reservationId)->table_id;
 
         $reservation = Reservation::where('table_id', $tableId)
             ->whereDate('starts_at', $today)
-            ->where('status', 'open')
+            ->latest('starts_at')
             ->first();
-        if (!$reservation) {
-            $reservation = new Reservation();
-            $reservation->table_id = $tableId;
-            $reservation->starts_at = Carbon::now();
-            $reservation->ends_at = Carbon::now()->addHours(2);
-            $reservation->status = 'open';
-            $reservation->save();
-            }
 
+        if (! $reservation) {
+            $reservation = Reservation::create([
+                'table_id'  => $tableId,
+                'starts_at' => Carbon::now(),
+                'ends_at'   => Carbon::now()->addHours(2),
+                'status'    => 'open',
+            ]);
+        }
 
-        return view('reservations.show', compact('table', 'reservation', 'meals'));
+        $table = $reservation->table;
+        $meals = Meal::all();
+
+        return view('reservations.show', compact('reservation', 'table', 'meals'));
+    }
+
+    public function print(Reservation $reservation)
+    {
+        $reservation->load('meals');
+        return view('reservations.print', compact('reservation'));
     }
 
 
