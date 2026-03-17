@@ -28,7 +28,7 @@
             </div>
             <div class="mt-4">
                 @if($reservation->status === 'payed')
-                    <a href="{{ route('reservations.print', $reservation->id) }}"
+                    <a href="{{ route('reservations.print', $reservation->id) }}" target="_blank"
                     class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
                         Print rekening
                     </a>
@@ -70,12 +70,14 @@
                     @endphp
                     <p class="text-white mt-4">Totaal: €{{ number_format($total, 2) }}</p>
                 </div>
-                <div class="bg-gray-800 p-4 rounded-lg">
-                    <h3 class="text-white text-2xl pb-5">Maaltijden:</h3>
-                    @foreach($meals as $meal)
-                        @livewire('add-meal-to-reservation', ['meal' => $meal, 'mealId' => $meal->id, 'reservationId' => $reservation->id], key($meal->id))
-                    @endforeach
-                </div>
+                @if($reservation->status !== 'payed')
+                    <div class="bg-gray-800 p-4 rounded-lg">
+                        <h3 class="text-white text-2xl pb-5">Maaltijden:</h3>
+                        @foreach($meals as $meal)
+                            @livewire('add-meal-to-reservation', ['meal' => $meal, 'mealId' => $meal->id, 'reservationId' => $reservation->id], key($meal->id))
+                        @endforeach
+                    </div>
+                @endif
             </div>
         </div>
     </div>

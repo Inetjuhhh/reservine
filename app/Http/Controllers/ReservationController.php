@@ -6,6 +6,7 @@ use App\Models\Ingredient;
 use App\Models\Meal;
 use App\Models\Reservation;
 use App\Models\Table;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -86,7 +87,16 @@ class ReservationController extends Controller
     public function print(Reservation $reservation)
     {
         $reservation->load('meals');
-        return view('reservations.print', compact('reservation'));
+
+        $total = $reservation->meals->sum('price');
+
+        $pdf = Pdf::loadView('reservations.print', [
+            'reservation' => $reservation,
+            'total' => $total,
+        ])->setPaper('A4', 'portrait');
+
+        return $pdf->stream('reservation-' . $reservation->id . '.pdf');
+        // or use ->download(...) if you want it downloaded
     }
 
 
